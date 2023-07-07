@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: Pagination should render Pagination 1`] = `
+<div>
+  <div
+    class="pagination"
+  >
+    <ul
+      class="pagination__list"
+    >
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link pagination__link--active"
+          href="#todo"
+        >
+          1
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link"
+          href="#todo"
+        >
+          2
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link"
+          href="#todo"
+        >
+          3
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link"
+          href="#todo"
+        >
+          4
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link pagination__link--text"
+          href="#todo"
+        >
+          Далее
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;

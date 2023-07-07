@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: Promo should render Promo 1`] = `
+<div>
+  <div
+    class="banner"
+  >
+    <picture>
+      <source
+        src="img/content/promo.webp"
+        srcset="img/content/promo@2x.webp"
+        type="image/webp"
+      />
+      <img
+        alt="баннер"
+        height="280"
+        src="img/content/promo.jpg"
+        srcset="img/content/promo@2x.jpg"
+        width="1280"
+      />
+    </picture>
+    <p
+      class="banner__info"
+    >
+      <span
+        class="banner__message"
+      >
+        Новинка!
+      </span>
+      <span
+        class="title title--h1"
+      >
+        Ретрокамера Dus Auge lV
+      </span>
+      <span
+        class="banner__text"
+      >
+        Нулевой
+         
+        Видеокамера
+         от известного производителя
+      </span>
+      <a
+        class="btn"
+        href="/product/1"
+      >
+        Подробнее
+      </a>
+    </p>
+  </div>
+</div>
+`;

@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: SimilaListCamera should render SimilaListCamera 1`] = `
+<div>
+  <div
+    class="page-content__section"
+  >
+    <section
+      class="product-similar"
+    >
+      <div
+        class="container"
+      >
+        <h2
+          class="title title--h3"
+        >
+          Похожие товары
+        </h2>
+        <div
+          class="product-similar__slider"
+          style="overflow: hidden; max-width: 560px;"
+        >
+          <div
+            class="product-similar__slider-list"
+            style="transform: translateX(0px); transition: translate; transition-property: transform; transition-duration: 400ms; transition-timing-function: ease-in-out;"
+          >
+            ;
+          </div>
+          <button
+            aria-label="Предыдущий слайд"
+            class="slider-controls slider-controls--prev"
+            disabled=""
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              height="12"
+              width="7"
+            >
+              <use
+                xlink:href="#icon-arrow"
+              />
+            </svg>
+          </button>
+          <button
+            aria-label="Следующий слайд"
+            class="slider-controls slider-controls--next"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              height="12"
+              width="7"
+            >
+              <use
+                xlink:href="#icon-arrow"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+`;

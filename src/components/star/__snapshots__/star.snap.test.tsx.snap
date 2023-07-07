@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: Star should render correctly Star 1`] = `
+<div>
+  <svg
+    aria-hidden="true"
+    height="16"
+    width="17"
+  >
+    <use
+      xlink:href="#icon-full-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="16"
+    width="17"
+  >
+    <use
+      xlink:href="#icon-full-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="16"
+    width="17"
+  >
+    <use
+      xlink:href="#icon-full-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="16"
+    width="17"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="16"
+    width="17"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+</div>
+`;
