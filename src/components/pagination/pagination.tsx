@@ -1,11 +1,11 @@
 import {useState} from 'react';
-import { returnListNumber } from '../../util/util';
-import { listCamera } from '../../types/types-response/types-response';
+import { returnNumbersList } from '../../util/util';
+import { CamerasList } from '../../types/types-response/types-response';
 
 type SetCurrentPage = React.Dispatch<React.SetStateAction<number>>
 
 type PaginationProps = {
-  products: listCamera | null;
+  products: CamerasList | null;
   productPerPage: number;
   onSetCurrentPage: SetCurrentPage;
 }
@@ -31,7 +31,7 @@ function Pagination({products, productPerPage, onSetCurrentPage}: PaginationProp
             Назад
             </a>
           </li>}
-        {products && returnListNumber(products.length / productPerPage).map((number) =>
+        {products && returnNumbersList(products.length / productPerPage).map((number) =>
           (
             <li
               key={number}

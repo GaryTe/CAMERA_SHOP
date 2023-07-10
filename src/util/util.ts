@@ -1,6 +1,6 @@
 import {MutableRefObject, KeyboardEvent} from 'react';
-import { Reviews, listCamera } from '../types/types-response/types-response';
-import { Category, TypeCamera, LevelProduct } from '../const/const';
+import { Reviews, CamerasList } from '../types/types-response/types-response';
+import { Category, TypeCamera, LevelProduct, stringValue } from '../const/const';
 
 import dayjs from 'dayjs';
 
@@ -29,97 +29,126 @@ export const sortReviews = (reviews: Reviews) => {
 };
 
 
-export const down = (products: listCamera, payload: string) => {
-  let resultSort: listCamera = [];
+export const sortDown = (products: CamerasList, payload: string) => {
+  let camerasList: CamerasList = [];
 
-  resultSort = products.slice ().sort ((a,b) => {
-    if (a[payload] < b[payload]) {
-      return -1;
-    }
-    if (a[payload] > b[payload]) {
-      return 1;
-    }
-    return 0;
-  }).reverse();
-
-  return resultSort;
+  switch (payload) {
+    case stringValue[0]:
+      camerasList = products.slice ().sort ((a,b) => {
+        if (a.price < b.price) {
+          return -1;
+        }
+        if (a.price > b.price) {
+          return 1;
+        }
+        return 0;
+      }).reverse();
+      break;
+    case stringValue[1]:
+      camerasList = products.slice ().sort ((a,b) => {
+        if (a.reviewCount < b.reviewCount) {
+          return -1;
+        }
+        if (a.reviewCount > b.reviewCount) {
+          return 1;
+        }
+        return 0;
+      }).reverse();
+      break;
+  }
+  return camerasList;
 };
 
-export const up = (products: listCamera, payload: string) => {
-  let resultSort: listCamera = [];
+export const sortUp = (products: CamerasList, payload: string) => {
+  let camerasList: CamerasList = [];
 
-  resultSort = products.slice ().sort ((a,b) => {
-    if (a[payload] < b[payload]) {
-      return -1;
-    }
-    if (a[payload] > b[payload]) {
-      return 1;
-    }
-    return 0;
-  });
+  switch(payload) {
+    case stringValue[0]:
+      camerasList = products.slice ().sort ((a,b) => {
+        if (a.price < b.price) {
+          return -1;
+        }
+        if (a.price > b.price) {
+          return 1;
+        }
+        return 0;
+      });
+      break;
+    case stringValue[1]:
+      camerasList = products.slice ().sort ((a,b) => {
+        if (a.reviewCount < b.reviewCount) {
+          return -1;
+        }
+        if (a.reviewCount > b.reviewCount) {
+          return 1;
+        }
+        return 0;
+      });
+      break;
+  }
 
-  return resultSort;
+  return camerasList;
 };
 
 
-export const filteringByCategory = (products: listCamera, payload: string): listCamera => {
-  let filteredListProduct: listCamera = [];
+export const filteringByCategory = (products: CamerasList, payload: string): CamerasList => {
+  let camerasList: CamerasList = [];
 
   switch (payload) {
     case Category.Camera:
-      filteredListProduct = products.slice().filter((camera) => camera.category === Category.Camera);
+      camerasList = products.slice().filter((camera) => camera.category === Category.Camera);
       break;
     case Category.Videocamera:
-      filteredListProduct = products.slice().filter((Videocamera) => Videocamera.category === Category.Videocamera);
+      camerasList = products.slice().filter((Videocamera) => Videocamera.category === Category.Videocamera);
       break;
     case TypeCamera.Digital:
-      filteredListProduct = products.slice().filter((camera) => camera.type === TypeCamera.Digital);
+      camerasList = products.slice().filter((camera) => camera.type === TypeCamera.Digital);
       break;
     case TypeCamera.Instant:
-      filteredListProduct = products.slice().filter((camera) => camera.type === TypeCamera.Instant);
+      camerasList = products.slice().filter((camera) => camera.type === TypeCamera.Instant);
       break;
     case TypeCamera.Membranous:
-      filteredListProduct = products.slice().filter((camera) => camera.type === TypeCamera.Membranous);
+      camerasList = products.slice().filter((camera) => camera.type === TypeCamera.Membranous);
       break;
     case TypeCamera.Collection:
-      filteredListProduct = products.slice().filter((camera) => camera.type === TypeCamera.Collection);
+      camerasList = products.slice().filter((camera) => camera.type === TypeCamera.Collection);
       break;
     case LevelProduct.Zero:
-      filteredListProduct = products.slice().filter((camera) => camera.level === LevelProduct.Zero);
+      camerasList = products.slice().filter((camera) => camera.level === LevelProduct.Zero);
       break;
     case LevelProduct.Professional:
-      filteredListProduct = products.slice().filter((camera) => camera.level === LevelProduct.Professional);
+      camerasList = products.slice().filter((camera) => camera.level === LevelProduct.Professional);
       break;
     case LevelProduct.Amateur:
-      filteredListProduct = products.slice().filter((camera) => camera.level === LevelProduct.Amateur);
+      camerasList = products.slice().filter((camera) => camera.level === LevelProduct.Amateur);
       break;
   }
 
-  return filteredListProduct;
+  return camerasList;
 };
 
 export const filteringByPrice = (
-  products: listCamera,
+  products: CamerasList,
   priceFrom: number | null,
   priceTo: number | null
 ) => {
-  let totalProducts: listCamera = [];
+  let camerasList: CamerasList = [];
 
   if(priceFrom && !priceTo) {
-    totalProducts = products.filter((product) => product.price > priceFrom);
+    camerasList = products.filter((product) => product.price > priceFrom);
   }
   if(!priceFrom && priceTo) {
-    totalProducts = products.filter((product) => product.price < priceTo);
+    camerasList = products.filter((product) => product.price < priceTo);
   }
   if(priceFrom && priceTo) {
-    totalProducts = products.filter((product) => product.price > priceFrom && product.price < priceTo);
+    camerasList = products.filter((product) => product.price > priceFrom && product.price < priceTo);
   }
 
-  return totalProducts;
+  return camerasList;
 };
 
 
-export const returnListNumber = (
+export const returnNumbersList = (
   value: number
 ) =>{
   let counter = 0;

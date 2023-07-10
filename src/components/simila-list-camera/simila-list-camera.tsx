@@ -4,8 +4,8 @@ import { showMoreCards, showFewerCards } from '../../store/reducers/get-simila-p
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store/use-store';
 import { fetchDataSimilarProduct } from '../../store/api-actions/api-actions';
 import {
-  dataSimilaCameras,
-  receivedData,
+  similaCamerasData,
+  receivedCamerasList,
   dataConter
 } from '../../store/selectors/data-simila-cameras/selectors';
 
@@ -21,7 +21,7 @@ const OFFSET = 555;
 function SimilaListCamera({cameraId, onSetMadalWindowAddProduct}: SimilaListCameraProps): JSX.Element {
   const [offset, setOffset] = useState(0);
   const dispatch = useAppDispatch();
-  const dataCameras = useAppSelector(receivedData);
+  const camerasData = useAppSelector(receivedCamerasList);
   const valueCaunter = useAppSelector(dataConter);
 
   const handlerOffsetLeft = () => {
@@ -57,7 +57,7 @@ function SimilaListCamera({cameraId, onSetMadalWindowAddProduct}: SimilaListCame
               <CardsProduct
                 cameraId={cameraId}
                 fetch={fetchDataSimilarProduct}
-                selector={dataSimilaCameras}
+                selector={similaCamerasData}
                 onSetWindowAddProduct={onSetMadalWindowAddProduct}
               />
             </div>
@@ -83,7 +83,7 @@ function SimilaListCamera({cameraId, onSetMadalWindowAddProduct}: SimilaListCame
                 dispatch(showMoreCards());
                 handlerOffsetRight();
               }}
-              disabled={!!(dataCameras !== null && valueCaunter >= dataCameras.length)}
+              disabled={!!(camerasData !== null && valueCaunter >= camerasData.length)}
             >
               <svg width="7" height="12" aria-hidden="true" >
                 <use xlinkHref="#icon-arrow"></use>

@@ -5,7 +5,7 @@ import { NameSpace } from '../../../const/const';
 import { promoProduct } from '../../../util/mocks';
 
 const initialState: PromoCamera = {
-  dataPromoCamera: null
+  promoCamerasData: null
 };
 
 export const getPromoProduct = createSlice({
@@ -13,13 +13,13 @@ export const getPromoProduct = createSlice({
   initialState,
   reducers: {
     functionForTesting: (state) => {
-      state.dataPromoCamera = promoProduct;
+      state.promoCamerasData = promoProduct;
     }
   },
   extraReducers(builder) {
     builder
       .addCase(fetchDataPromoProduct.fulfilled, (state, action) => {
-        state.dataPromoCamera = action.payload;
+        state.promoCamerasData = action.payload;
       });
   }
 });

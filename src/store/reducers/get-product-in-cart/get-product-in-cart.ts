@@ -4,7 +4,7 @@ import { NameSpace } from '../../../const/const';
 import { CardProduct } from '../../../types/types-response/types-response';
 
 const initialState: Cart = {
-  dataProduct: [],
+  productsData: [],
   loading: false
 };
 
@@ -13,8 +13,8 @@ export const getProductInCart = createSlice({
   initialState,
   reducers: {
     addProductInCart: (state, action: PayloadAction<CardProduct>) => {
-      state.dataProduct.push(action.payload);
-      if(state.dataProduct) {state.loading = true;}
+      state.productsData.push(action.payload);
+      if(state.productsData) {state.loading = true;}
     },
     closeModalWindow: (state) => {
       state.loading = false;

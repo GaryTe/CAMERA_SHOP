@@ -14,7 +14,7 @@ export type CardProduct = {
   previewImgWebp2x: string;
   }
 
-export type listCamera = CardProduct[];
+export type CamerasList = CardProduct[];
 
 export type Review = {
   id: string;

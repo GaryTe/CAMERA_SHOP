@@ -7,40 +7,40 @@ const firstValueReviews = [review];
 const secondValueReviews = [review, review];
 
 const state = {
-  dataReviews: [],
+  reviewsData: [],
   resultSortReviews: null,
   reviews: null,
   counter: 3
 };
 
 const changesState = {
-  dataReviews: [],
+  reviewsData: [],
   resultSortReviews: secondValueReviews,
   reviews: null,
   counter: 3
 };
 
 describe('Reducer: getReviews', () => {
-  it('should update dataReviews, resultSortReviews, reviews when the array is from one review', () => {
+  it('should update reviewsData, resultSortReviews, reviews when the array is from one review', () => {
     expect(getReviews.reducer(state, {type: fetchDataReviews.fulfilled.type, payload: firstValueReviews}))
       .toEqual({
-        dataReviews: firstValueReviews,
+        reviewsData: firstValueReviews,
         resultSortReviews: firstValueReviews,
         reviews: firstValueReviews,
         counter: 3});
   });
-  it('should update dataReviews, resultSortReviews, reviews when the array is from two review', () => {
+  it('should update reviewsData, resultSortReviews, reviews when the array is from two review', () => {
     expect(getReviews.reducer(state, {type: fetchDataReviews.fulfilled.type, payload: secondValueReviews}))
       .toEqual({
-        dataReviews: secondValueReviews,
+        reviewsData: secondValueReviews,
         resultSortReviews: secondValueReviews,
         reviews: secondValueReviews,
         counter: 3});
   });
-  it('should update dataReviews, resultSortReviews, reviews when adding a review', () => {
+  it('should update reviewsData, resultSortReviews, reviews when adding a review', () => {
     expect(getReviews.reducer(state, {type: fetchPostNewReview.fulfilled.type, payload: review}))
       .toEqual({
-        dataReviews: firstValueReviews,
+        reviewsData: firstValueReviews,
         resultSortReviews: firstValueReviews,
         reviews: firstValueReviews,
         counter: 3});
@@ -48,7 +48,7 @@ describe('Reducer: getReviews', () => {
   it('changes value counter, if value resultSortReviews = null, so return and counter = 3', () => {
     expect(getReviews.reducer(state, showMoreReviews()))
       .toEqual({
-        dataReviews: [],
+        reviewsData: [],
         resultSortReviews: null,
         reviews: null,
         counter: 3});
@@ -56,7 +56,7 @@ describe('Reducer: getReviews', () => {
   it('changes value counter, if value resultSortReviews !== null, so counter = 6', () => {
     expect(getReviews.reducer(changesState, showMoreReviews()))
       .toEqual({
-        dataReviews: [],
+        reviewsData: [],
         resultSortReviews: secondValueReviews,
         reviews: secondValueReviews,
         counter: 6});

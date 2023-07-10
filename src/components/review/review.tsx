@@ -3,7 +3,7 @@ import { Fragment, useRef } from 'react';
 import { useAppDispatch } from '../../hooks/use-store/use-store';
 import { useUnlockScroll } from '../../hooks/use-unlock-scroll/use-unlock-scroll';
 import { fetchPostNewReview } from '../../store/api-actions/api-actions';
-import { TITLE } from '../../const/const';
+import { HEADLINES } from '../../const/const';
 import { DataForNewReview } from '../../types/type-request/type-request';
 import { useShiftFocus } from '../../hooks/use-shift-focus/use-shift-focus';
 import { shiftFocus } from '../../util/util';
@@ -77,12 +77,12 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                   </legend>
                   <div className="rate__bar">
                     <div className="rate__group" {...register('rate',{required: 'Нужно оценить товар'})}>
-                      {TITLE.map((title, index) =>
+                      {HEADLINES.map((header, index) =>
                       {
                         const id = 5 - index;
 
                         return(
-                          <Fragment key={title}>
+                          <Fragment key={header}>
                             <input
                               className="visually-hidden"
                               id={`star-${id}`}
@@ -95,7 +95,7 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                             <label
                               className="rate__label"
                               htmlFor={`star-${id}`}
-                              title={title}
+                              title={header}
                             >
                             </label>
                           </Fragment>

@@ -1,15 +1,15 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
-import { listCamera, CardProduct, Reviews, PromoProduct, Review } from '../../types/types-response/types-response';
+import { CamerasList, CardProduct, Reviews, PromoProduct, Review } from '../../types/types-response/types-response';
 import { DataForNewReview } from '../../types/type-request/type-request';
 import { APIRoute } from '../../const/const';
 
-export const fetchDataListCamera = createAsyncThunk<listCamera, undefined, {
+export const fetchDataListCamera = createAsyncThunk<CamerasList, undefined, {
   extra: AxiosInstance;
 }>(
   'data/responseListCamera',
   async (_arg, {extra: api}) => {
-    const {data} = await api.get<listCamera>(APIRoute.Cameras);
+    const {data} = await api.get<CamerasList>(APIRoute.Cameras);
     return data;
   },
 );
@@ -24,12 +24,12 @@ export const fetchDataCardProduct = createAsyncThunk<CardProduct, number, {
   },
 );
 
-export const fetchDataSimilarProduct = createAsyncThunk<listCamera, number, {
+export const fetchDataSimilarProduct = createAsyncThunk<CamerasList, number, {
   extra: AxiosInstance;
 }>(
   'data/responseSimilarProduct',
   async (cameraId: number, {extra: api}) => {
-    const {data} = await api.get<listCamera>(`${APIRoute.Cameras}/${cameraId}${APIRoute.Similar}`);
+    const {data} = await api.get<CamerasList>(`${APIRoute.Cameras}/${cameraId}${APIRoute.Similar}`);
     return data;
   },
 );

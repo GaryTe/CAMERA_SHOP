@@ -48,7 +48,7 @@ export enum LevelProduct {
 }
 
 
-export const TITLE: readonly string[] = [
+export const HEADLINES: readonly string[] = [
   'Отлично',
   'Хорошо',
   'Нормально',

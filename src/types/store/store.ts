@@ -1,9 +1,9 @@
 import { store } from '../../store/store/store';
-import { listCamera, CardProduct, Reviews, PromoProduct, Review } from '../types-response/types-response';
+import { CamerasList, CardProduct, Reviews, PromoProduct, Review } from '../types-response/types-response';
 
 export type Cameras = {
-  cameras: listCamera | null;
-  modifiedListProduct: listCamera | null;
+  cameras: CamerasList | null;
+  modifiedProductsList: CamerasList | null;
 }
 
 export type CardCamera = {
@@ -11,25 +11,25 @@ export type CardCamera = {
 }
 
 export type SimilaCameras = {
-  dataSimilaCameras: listCamera | null;
-  sortListCamerra: listCamera | null;
+  similaCamerasData: CamerasList | null;
+  sortCamerasList: CamerasList | null;
   counterMin: number;
   counterMax: number;
 }
 
 export type ReviewsCamera = {
-  dataReviews: Reviews | Array<Review>;
+  reviewsData: Reviews | Array<Review>;
   resultSortReviews: Reviews | null;
   reviews: Reviews | null;
   counter: number;
 }
 
 export type PromoCamera = {
-  dataPromoCamera: PromoProduct | null;
+  promoCamerasData: PromoProduct | null;
 }
 
 export type Cart = {
-  dataProduct: listCamera | Array<CardProduct>;
+  productsData: CamerasList | Array<CardProduct>;
   loading: boolean;
 }
 

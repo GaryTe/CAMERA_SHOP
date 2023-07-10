@@ -16,17 +16,17 @@ import { useRequestToServer } from '../../hooks/use-request-to-server/use-reques
 import { useResetSorting } from '../../hooks/reset-sorting/reset-sorting';
 import { dataLoading } from '../../store/selectors/data-product-in-cart/selectors';
 import { fetchDataListCamera, fetchDataCardProduct, fetchDataPromoProduct } from '../../store/api-actions/api-actions';
-import { dataCameras, dataProduct } from '../../store/selectors/data-cameras/selectors';
-import { CardProduct, listCamera } from '../../types/types-response/types-response';
+import { camerasData, productsData } from '../../store/selectors/data-cameras/selectors';
+import { CardProduct, CamerasList } from '../../types/types-response/types-response';
 import { Path, stringValue } from '../../const/const';
-import { filteringByCategory, filteringByPrice, down, up } from '../../util/util';
-import { changeDataProduct } from '../../store/reducers/get-list-camera/get-list-camera';
+import { filteringByCategory, filteringByPrice, sortDown, sortUp } from '../../util/util';
+import { changeDataProducts } from '../../store/reducers/get-list-camera/get-list-camera';
 
-type FetchDataListCamera = AsyncThunk<listCamera, undefined, {
+type FetchDataListCamera = AsyncThunk<CamerasList, undefined, {
   extra: AxiosInstance;
 }>
 
-type FetchDataSimilarProduct = AsyncThunk<listCamera, number, {
+type FetchDataSimilarProduct = AsyncThunk<CamerasList, number, {
   extra: AxiosInstance;
 }>
 
@@ -50,13 +50,13 @@ function Catalog(): JSX.Element {
   const dispatch = useAppDispatch();
   useRequestToServer<FetchDataListCamera | FetchDataSimilarProduct, null>(fetchDataListCamera);
 
-  const originalListProduct = useAppSelector(dataProduct);
-  const listProduct = useAppSelector(dataCameras);
+  const originalProductsList = useAppSelector(productsData);
+  const productsList = useAppSelector(camerasData);
   const loading = useAppSelector(dataLoading);
 
   const lastProductIndex = currentPage * productPerPage;
   const firstProductIndex = lastProductIndex - productPerPage;
-  const currentProducts = listProduct?.slice(firstProductIndex, lastProductIndex);
+  const productsCurrent = productsList?.slice(firstProductIndex, lastProductIndex);
 
   useLockScroll<ModalWindow, boolean>(modalWindow, loading);
 
@@ -64,7 +64,7 @@ function Catalog(): JSX.Element {
 
   useEffect(() => {
     let isMounted = true;
-    let newDataProduct = originalListProduct;
+    let newDataProduct = originalProductsList;
     const {category, typeCamera, levelProduct, priceFrom, priceTo} = indicatorFilter;
     const {priceOfPopularity, descendingOfAscending} = valueSort;
 
@@ -86,19 +86,19 @@ function Catalog(): JSX.Element {
     }
 
     if(descendingOfAscending === stringValue[2]) {
-      newDataProduct = down(newDataProduct, priceOfPopularity);
+      newDataProduct = sortDown(newDataProduct, priceOfPopularity);
     }
     if(descendingOfAscending === stringValue[3]) {
-      newDataProduct = up(newDataProduct, priceOfPopularity);
+      newDataProduct = sortUp(newDataProduct, priceOfPopularity);
     }
 
     setCurrentPage(1);
-    dispatch(changeDataProduct(newDataProduct));
+    dispatch(changeDataProducts(newDataProduct));
 
     return () => {
       isMounted = false;
     };
-  },[indicatorFilter, originalListProduct, dispatch, valueSort]);
+  },[indicatorFilter, originalProductsList, dispatch, valueSort]);
 
   return(
     <>
@@ -142,10 +142,10 @@ function Catalog(): JSX.Element {
                     <Sort onSetValueSort={setValueSort} valueSort={valueSort}/>
                   </div>
                   <div className="cards catalog__cards">
-                    <Product products={currentProducts} onSetModalWindow={setModalWindow}/>
+                    <Product products={productsCurrent} onSetModalWindow={setModalWindow}/>
                   </div>
                   <Pagination
-                    products={listProduct}
+                    products={productsList}
                     productPerPage={productPerPage}
                     onSetCurrentPage = {setCurrentPage}
                   />

@@ -1,4 +1,4 @@
-import { returnListNumber } from '../../util/util';
+import { returnNumbersList } from '../../util/util';
 
 type StarProps = {
   result: number;
@@ -7,7 +7,7 @@ type StarProps = {
 function Star({result}: StarProps): JSX.Element {
   return(
     <>
-      {returnListNumber(4).map((number) =>
+      {returnNumbersList(4).map((number) =>
 
         (
           <svg key={number} width="17" height="16" aria-hidden="true">

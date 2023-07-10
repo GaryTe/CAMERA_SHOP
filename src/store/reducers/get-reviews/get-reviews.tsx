@@ -6,7 +6,7 @@ import { NameSpace } from '../../../const/const';
 import { review, Review } from '../../../util/mocks';
 
 const initialState: ReviewsCamera = {
-  dataReviews: [],
+  reviewsData: [],
   resultSortReviews: null,
   reviews: null,
   counter: 3
@@ -22,21 +22,21 @@ export const getReviews = createSlice({
       state.reviews = state.resultSortReviews.slice(0, state.counter);
     },
     functionForTesting: (state, action: PayloadAction<Array<Review> | number>) => {
-      state.dataReviews = typeof action?.payload === 'number' ? [review, review, review, review] : action.payload;
+      state.reviewsData = typeof action?.payload === 'number' ? [review, review, review, review] : action.payload;
       state.reviews = [review, review, review];
     }
   },
   extraReducers(builder) {
     builder
       .addCase(fetchDataReviews.fulfilled, (state, action) => {
-        state.dataReviews = action.payload;
-        state.resultSortReviews = sortReviews(state.dataReviews);
+        state.reviewsData = action.payload;
+        state.resultSortReviews = sortReviews(state.reviewsData);
         state.reviews = state.resultSortReviews.slice(0,state.counter);
       });
     builder
       .addCase(fetchPostNewReview.fulfilled, (state, action) => {
-        state.dataReviews.push(action.payload);
-        state.resultSortReviews = sortReviews(state.dataReviews);
+        state.reviewsData.push(action.payload);
+        state.resultSortReviews = sortReviews(state.reviewsData);
         state.reviews = state.resultSortReviews.slice(0,state.counter);
       });
   }

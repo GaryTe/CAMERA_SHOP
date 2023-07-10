@@ -5,8 +5,8 @@ import { NameSpace } from '../../../const/const';
 import { listProduct } from '../../../util/mocks';
 
 const initialState: SimilaCameras = {
-  dataSimilaCameras: null,
-  sortListCamerra: null,
+  similaCamerasData: null,
+  sortCamerasList: null,
   counterMin: 0,
   counterMax: 3
 };
@@ -16,27 +16,27 @@ export const getSimilaProduct = createSlice({
   initialState,
   reducers: {
     showMoreCards: (state) => {
-      if(state.dataSimilaCameras === null) {return;}
+      if(state.similaCamerasData === null) {return;}
       state.counterMin += 3;
       state.counterMax += 3;
-      state.sortListCamerra = state.dataSimilaCameras;
+      state.sortCamerasList = state.similaCamerasData;
     },
     showFewerCards: (state) => {
-      if(state.dataSimilaCameras === null) {return;}
+      if(state.similaCamerasData === null) {return;}
       state.counterMin -= 3;
       state.counterMax -= 3;
-      state.sortListCamerra = state.dataSimilaCameras;
+      state.sortCamerasList = state.similaCamerasData;
     },
     functionForTesting: (state) => {
-      state.sortListCamerra = listProduct();
-      state.dataSimilaCameras = listProduct();
+      state.sortCamerasList = listProduct();
+      state.similaCamerasData = listProduct();
     }
   },
   extraReducers(builder) {
     builder
       .addCase(fetchDataSimilarProduct.fulfilled, (state, action) => {
-        state.dataSimilaCameras = action.payload;
-        state.sortListCamerra = state.dataSimilaCameras;
+        state.similaCamerasData = action.payload;
+        state.sortCamerasList = state.similaCamerasData;
       });
   }
 });

@@ -5,7 +5,7 @@ import {Router} from 'react-router-dom';
 import CardsProduct from './cards-product';
 import { store } from '../../store/store/store';
 import { functionForTesting } from '../../store/reducers/get-simila-product/get-simila-product';
-import { dataSimilaCameras } from '../../store/selectors/data-simila-cameras/selectors';
+import { similaCamerasData } from '../../store/selectors/data-simila-cameras/selectors';
 
 const history = createMemoryHistory();
 
@@ -13,7 +13,7 @@ const children = (
   <
     CardsProduct
     fetch={functionForTesting}
-    selector={dataSimilaCameras}
+    selector={similaCamerasData}
   />
 );
 

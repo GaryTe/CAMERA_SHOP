@@ -16,7 +16,7 @@ import { useRequestToServer } from '../../hooks/use-request-to-server/use-reques
 import { useLockScroll } from '../../hooks/use-lock-scroll/use-lock-scroll';
 import { useAppSelector } from '../../hooks/use-store/use-store';
 import { dataLoading } from '../../store/selectors/data-product-in-cart/selectors';
-import {dataCameras} from '../../store/selectors/data-cameras/selectors';
+import {camerasData} from '../../store/selectors/data-cameras/selectors';
 import { fetchDataCardProduct } from '../../store/api-actions/api-actions';
 import { fetchDataReviews } from '../../store/api-actions/api-actions';
 import { dataCameraProduct } from '../../store/selectors/data-card-product/selectors';
@@ -32,7 +32,7 @@ function CardCamera(): JSX.Element {
   const [modalWindowMessage, setModalWindowMessage] = useState<boolean>(false);
   const [madalWindowAddProduct, setMadalWindowAddProduct] = useState<boolean | null>(null);
   const loading = useAppSelector(dataLoading);
-  const products = useAppSelector(dataCameras);
+  const products = useAppSelector(camerasData);
   const params = useParams();
   const dataProduct = products?.find((product) => product.id.toString() === params.id );
 

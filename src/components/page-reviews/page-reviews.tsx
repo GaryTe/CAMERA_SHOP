@@ -4,7 +4,7 @@ import Star from '../star/star';
 import { useRequestToServer } from '../../hooks/use-request-to-server/use-request-to-server';
 import { useAppSelector, useAppDispatch } from '../../hooks/use-store/use-store';
 import { showMoreReviews } from '../../store/reducers/get-reviews/get-reviews';
-import { dataReviews, valueCounter, feedbackReviews } from '../../store/selectors/data-reviews/selectors';
+import { reviewsData, valueCounter, feedbackReviews } from '../../store/selectors/data-reviews/selectors';
 import { Reviews } from '../../types/types-response/types-response';
 import { gettingTranslatedDate } from '../../util/util';
 import { Review } from '../../util/mocks';
@@ -24,7 +24,7 @@ function PegeReviews({cameraId, functionRequest}: PegeReviewsProps): JSX.Element
   useRequestToServer<FetchDataReviews | FunctionForTesting, number>(functionRequest, Number(cameraId));
   const dispatch = useAppDispatch();
   const valueReviews = useAppSelector(feedbackReviews);
-  const reviews = useAppSelector(dataReviews);
+  const reviews = useAppSelector(reviewsData);
   const counter = useAppSelector(valueCounter);
 
   return(

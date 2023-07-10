@@ -4,23 +4,23 @@ import {Link} from 'react-router-dom';
 import Star from '../star/star';
 import { useRequestToServer } from '../../hooks/use-request-to-server/use-request-to-server';
 import { useAppSelector } from '../../hooks/use-store/use-store';
-import { listCamera, CardProduct } from '../../types/types-response/types-response';
+import { CamerasList, CardProduct } from '../../types/types-response/types-response';
 import { RootState } from '../../types/store/store';
 import { Path } from '../../const/const';
 import { Fragment } from 'react';
 import { returnNumber } from '../../util/util';
 
-type FetchDataListCamera = AsyncThunk<listCamera, undefined, {
+type FetchDataListCamera = AsyncThunk<CamerasList, undefined, {
   extra: AxiosInstance;
 }>
 
-type FetchDataSimilarProduct = AsyncThunk<listCamera, number, {
+type FetchDataSimilarProduct = AsyncThunk<CamerasList, number, {
   extra: AxiosInstance;
 }>
 
 type FunctionForTesting = ActionCreatorWithoutPayload<string>
 
-type DataCameras = (state: RootState) => listCamera | null
+type DataCameras = (state: RootState) => CamerasList | null
 
 type SetModalWindow = React.Dispatch<React.SetStateAction<CardProduct | null>>
 type SetMadalWindowAddProduct = React.Dispatch<React.SetStateAction<boolean | null>>
