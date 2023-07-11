@@ -1,5 +1,4 @@
-import {useForm, SubmitHandler} from 'react-hook-form';
-import { Fragment, useRef } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { useAppDispatch } from '../../hooks/use-store/use-store';
 import { useUnlockScroll } from '../../hooks/use-unlock-scroll/use-unlock-scroll';
 import { fetchPostNewReview } from '../../store/api-actions/api-actions';
@@ -7,14 +6,6 @@ import { HEADLINES } from '../../const/const';
 import { DataForNewReview } from '../../types/type-request/type-request';
 import { useShiftFocus } from '../../hooks/use-shift-focus/use-shift-focus';
 import { shiftFocus } from '../../util/util';
-
-type DataFeedback = {
-  'rate': string;
-  'user-name': string;
-  'user-plus': string;
-  'user-minus': string;
-  'user-comment': string;
-}
 
 type SetModalWindow = React.Dispatch<React.SetStateAction<boolean>>
 
@@ -27,11 +18,22 @@ type ReviewProps = {
 }
 
 function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewProps): JSX.Element {
-  const {register, handleSubmit, formState: {errors}} = useForm<DataFeedback>();
+  const [review, setReview] = useState({
+    rate: 0,
+    'user-name': 0,
+    'user-plus': 0,
+    'user-minus': 0,
+    'user-comment': 0
+  });
+  const refUserName = useRef<HTMLInputElement | null>(null);
+  const refUserPlus = useRef<HTMLInputElement | null>(null);
+  const refUserMinus = useRef<HTMLInputElement | null>(null);
+  const refUserComment = useRef<HTMLTextAreaElement | null>(null);
   const refButton = useRef(null);
   const dispatch = useAppDispatch();
 
   useUnlockScroll<SetModalWindow>(onSetModalWindow);
+  useShiftFocus(refButton);
 
   const processingData = async (newDataReview: DataForNewReview) => {
     try {
@@ -44,21 +46,32 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
   };
 
 
-  const sendingDataToServer: SubmitHandler<DataFeedback> = (data) => {
+  const sendingDataToServer = () => {
+    if(!review.rate || !review['user-name'] || !review['user-plus'] || !review['user-minus'] || !review['user-comment']) {return;}
+    if(!refUserName.current || !refUserPlus.current || !refUserMinus.current || !refUserComment.current) {return;}
 
     const newDataForReview = {
       cameraId: Number(cameraId),
-      userName: data['user-name'],
-      advantage: data['user-plus'],
-      disadvantage: data['user-minus'],
-      review: data['user-comment'],
-      rating: Number(data.rate)
+      userName: refUserName.current.value,
+      advantage: refUserPlus.current.value,
+      disadvantage: refUserMinus.current.value,
+      review: refUserComment.current.value,
+      rating: Number(review.rate)
     };
 
     processingData(newDataForReview);
   };
 
-  useShiftFocus(refButton);
+  const checkingData = (data: string, nameKye: string) => {
+    if(data.length === 1 || data.length > 0) {setReview({
+      ...review,
+      [nameKye]: 1
+    });}
+    if(data.length === 0) {setReview({
+      ...review,
+      [nameKye]: 0
+    });}
+  };
 
   return(
     <div className="modal is-active">
@@ -67,16 +80,28 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
         <div className="modal__content" onKeyDown={(evt) => shiftFocus(evt, refButton)}>
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
-            <form method="post" onSubmit={handleSubmit(sendingDataToServer)}>
+            <form
+              method="post"
+              onSubmit={(evt) => {
+                evt.preventDefault();
+                sendingDataToServer();
+              }}
+            >
               <div className="form-review__rate">
-                <fieldset className={!errors.rate ? 'rate form-review__item' : 'rate form-review__item is-invalid'}>
+                <fieldset
+                  className={
+                    review.rate !== 0 ?
+                      'rate form-review__item' :
+                      'rate form-review__item is-invalid'
+                  }
+                >
                   <legend className="rate__caption">Рейтинг
                     <svg width="9" height="9" aria-hidden="true">
                       <use xlinkHref="#icon-snowflake"></use>
                     </svg>
                   </legend>
                   <div className="rate__bar">
-                    <div className="rate__group" {...register('rate',{required: 'Нужно оценить товар'})}>
+                    <div className="rate__group">
                       {HEADLINES.map((header, index) =>
                       {
                         const id = 5 - index;
@@ -90,6 +115,10 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                               type="radio"
                               value={`${id}`}
                               data-testid="productEvaluation"
+                              onChange={() => setReview({
+                                ...review,
+                                rate: id
+                              })}
                             >
                             </input>
                             <label
@@ -109,10 +138,15 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                       <span className="rate__all-stars">5</span>
                     </div>
                   </div>
-                  <p className="rate__message">{errors.rate?.message}</p>
+                  <p className="rate__message">Нужно оценить товар</p>
                 </fieldset>
                 <div
-                  className={!errors['user-name'] ? 'custom-input form-review__item' : 'custom-input form-review__item is-invalid'}
+                  className={
+                    review['user-name'] !== 0 ?
+                      'custom-input form-review__item'
+                      :
+                      'custom-input form-review__item is-invalid'
+                  }
                 >
                   <label>
                     <span className="custom-input__label">Ваше имя
@@ -122,16 +156,23 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                     </span>
                     <input
                       type="text"
-                      {...register('user-name', {required: 'Нужно указать имя'})}
+                      name='user-name'
                       placeholder="Введите ваше имя"
                       data-testid="userName"
+                      onChange={(evt) => checkingData(evt.target.value, evt.target.name)}
+                      ref={refUserName}
                     >
                     </input>
                   </label>
-                  <p className="custom-input__error">{errors['user-name']?.message}</p>
+                  <p className="custom-input__error">Нужно указать имя</p>
                 </div>
                 <div
-                  className={!errors['user-plus'] ? 'custom-input form-review__item' : 'custom-input form-review__item is-invalid'}
+                  className={
+                    review['user-plus'] ?
+                      'custom-input form-review__item'
+                      :
+                      'custom-input form-review__item is-invalid'
+                  }
                 >
                   <label>
                     <span className="custom-input__label">Достоинства
@@ -141,16 +182,23 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                     </span>
                     <input
                       type="text"
-                      {...register('user-plus', {required: 'Нужно указать достоинства'})}
+                      name='user-plus'
                       placeholder="Основные преимущества товара"
                       data-testid="productAdvantages"
+                      onChange={(evt) => checkingData(evt.target.value, evt.target.name)}
+                      ref={refUserPlus}
                     >
                     </input>
                   </label>
-                  <p className="custom-input__error">{errors['user-plus']?.message}</p>
+                  <p className="custom-input__error">Нужно указать достоинства</p>
                 </div>
                 <div
-                  className={!errors['user-minus'] ? 'custom-input form-review__item' : 'custom-input form-review__item is-invalid'}
+                  className={
+                    review['user-minus'] ?
+                      'custom-input form-review__item'
+                      :
+                      'custom-input form-review__item is-invalid'
+                  }
                 >
                   <label>
                     <span className="custom-input__label">Недостатки
@@ -160,16 +208,23 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                     </span>
                     <input
                       type="text"
-                      {...register('user-minus', {required: 'Нужно указать недостатки'})}
+                      name='user-minus'
                       placeholder="Главные недостатки товара"
                       data-testid="productDefects"
+                      onChange={(evt) => checkingData(evt.target.value, evt.target.name)}
+                      ref={refUserMinus}
                     >
                     </input>
                   </label>
-                  <p className="custom-input__error">{errors['user-minus']?.message}</p>
+                  <p className="custom-input__error">Нужно указать недостатки</p>
                 </div>
                 <div
-                  className={!errors['user-comment'] ? 'custom-textarea form-review__item' : 'custom-textarea form-review__item is-invalid'}
+                  className={
+                    review['user-comment'] ?
+                      'custom-textarea form-review__item'
+                      :
+                      'custom-textarea form-review__item is-invalid'
+                  }
                 >
                   <label>
                     <span className="custom-textarea__label">Комментарий
@@ -178,21 +233,20 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                       </svg>
                     </span>
                     <textarea
-                      {...register('user-comment',
-                        {
-                          required: 'Нужно добавить комментарий',
-                          minLength: {
-                            value: 5,
-                            message: 'Минимальная длина равна 5',
-                          }
-                        })}
+                      name='user-comment'
                       minLength={5}
                       placeholder="Поделитесь своим опытом покупки"
                       data-testid="productDescription"
+                      onChange={(evt) => {
+                        const {value, name} = evt.target;
+                        if(value.length >= 5 && review['user-comment'] === 0) {setReview({...review, [name]: 1});}
+                        if(value.length < 5 && review['user-comment'] === 1) {setReview({...review, [name]: 0});}
+                      }}
+                      ref={refUserComment}
                     >
                     </textarea>
                   </label>
-                  <div className="custom-textarea__error">{errors['user-comment']?.message}</div>
+                  <div className="custom-textarea__error">Нужно добавить комментарий</div>
                 </div>
               </div>
               <button
