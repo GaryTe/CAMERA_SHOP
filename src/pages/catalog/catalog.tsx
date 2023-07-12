@@ -19,7 +19,7 @@ import { fetchDataListCamera, fetchDataCardProduct, fetchDataPromoProduct } from
 import { camerasData, productsData } from '../../store/selectors/data-cameras/selectors';
 import { CardProduct, CamerasList } from '../../types/types-response/types-response';
 import { Path, stringValue } from '../../const/const';
-import { filteringByCategory, filteringByPrice, sortDown, sortUp } from '../../util/util';
+import { filterByCategory, filterByPrice, sortDown, sortUp } from '../../util/util';
 import { changeDataProducts } from '../../store/reducers/get-list-camera/get-list-camera';
 
 type FetchDataListCamera = AsyncThunk<CamerasList, undefined, {
@@ -71,18 +71,18 @@ function Catalog(): JSX.Element {
     if(newDataProduct === null) {return;}
 
     if(isMounted && (priceFrom || priceTo)) {
-      newDataProduct = filteringByPrice(newDataProduct, Number(priceFrom), Number(priceTo));
+      newDataProduct = filterByPrice(newDataProduct, Number(priceFrom), Number(priceTo));
     }
 
     if(isMounted && category ) {
-      newDataProduct = filteringByCategory(newDataProduct, category);
+      newDataProduct = filterByCategory(newDataProduct, category);
     }
 
     if(isMounted && typeCamera ) {
-      newDataProduct = filteringByCategory(newDataProduct, typeCamera);
+      newDataProduct = filterByCategory(newDataProduct, typeCamera);
     }
     if(isMounted && levelProduct ) {
-      newDataProduct = filteringByCategory(newDataProduct, levelProduct);
+      newDataProduct = filterByCategory(newDataProduct, levelProduct);
     }
 
     if(descendingOfAscending === stringValue[2]) {

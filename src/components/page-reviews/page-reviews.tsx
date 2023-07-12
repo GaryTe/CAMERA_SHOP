@@ -6,7 +6,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks/use-store/use-store'
 import { showMoreReviews } from '../../store/reducers/get-reviews/get-reviews';
 import { reviewsData, valueCounter, feedbackReviews } from '../../store/selectors/data-reviews/selectors';
 import { Reviews } from '../../types/types-response/types-response';
-import { gettingTranslatedDate } from '../../util/util';
+import { getTranslateDate } from '../../util/util';
 import { Review } from '../../util/mocks';
 
 type FetchDataReviews = AsyncThunk<Reviews, number, {
@@ -37,7 +37,7 @@ function PegeReviews({cameraId, functionRequest}: PegeReviewsProps): JSX.Element
             <li key={id} className="review-card">
               <div className="review-card__head">
                 <p className="title title--h4">{userName}</p>
-                <time className="review-card__data" dateTime="2022-04-13">{gettingTranslatedDate(createAt)}</time>
+                <time className="review-card__data" dateTime="2022-04-13">{getTranslateDate(createAt)}</time>
               </div>
               <div className="rate review-card__rate">
                 <Star result={rating} />

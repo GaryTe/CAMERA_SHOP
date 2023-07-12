@@ -35,7 +35,7 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
   useUnlockScroll<SetModalWindow>(onSetModalWindow);
   useShiftFocus(refButton);
 
-  const processingData = async (newDataReview: DataForNewReview) => {
+  const procesData = async (newDataReview: DataForNewReview) => {
     try {
       await dispatch(fetchPostNewReview(newDataReview)).unwrap();
       onSetModalWindow(false);
@@ -46,7 +46,7 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
   };
 
 
-  const sendingDataToServer = () => {
+  const sendDataToServer = () => {
     if(!review.rate || !review['user-name'] || !review['user-plus'] || !review['user-minus'] || !review['user-comment']) {return;}
     if(!refUserName.current || !refUserPlus.current || !refUserMinus.current || !refUserComment.current) {return;}
 
@@ -59,10 +59,10 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
       rating: Number(review.rate)
     };
 
-    processingData(newDataForReview);
+    procesData(newDataForReview);
   };
 
-  const checkingData = (data: string, nameKye: string) => {
+  const checkData = (data: string, nameKye: string) => {
     if(data.length === 1 || data.length > 0) {setReview({
       ...review,
       [nameKye]: 1
@@ -84,7 +84,7 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
               method="post"
               onSubmit={(evt) => {
                 evt.preventDefault();
-                sendingDataToServer();
+                sendDataToServer();
               }}
             >
               <div className="form-review__rate">
@@ -159,7 +159,7 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                       name='user-name'
                       placeholder="Введите ваше имя"
                       data-testid="userName"
-                      onChange={(evt) => checkingData(evt.target.value, evt.target.name)}
+                      onChange={(evt) => checkData(evt.target.value, evt.target.name)}
                       ref={refUserName}
                     >
                     </input>
@@ -185,7 +185,7 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                       name='user-plus'
                       placeholder="Основные преимущества товара"
                       data-testid="productAdvantages"
-                      onChange={(evt) => checkingData(evt.target.value, evt.target.name)}
+                      onChange={(evt) => checkData(evt.target.value, evt.target.name)}
                       ref={refUserPlus}
                     >
                     </input>
@@ -211,7 +211,7 @@ function Review({cameraId, onSetModalWindow, onSetModalWindowMessage}: ReviewPro
                       name='user-minus'
                       placeholder="Главные недостатки товара"
                       data-testid="productDefects"
-                      onChange={(evt) => checkingData(evt.target.value, evt.target.name)}
+                      onChange={(evt) => checkData(evt.target.value, evt.target.name)}
                       ref={refUserMinus}
                     >
                     </input>

@@ -5,7 +5,7 @@ import { Category, TypeCamera, LevelProduct, stringValue } from '../const/const'
 import dayjs from 'dayjs';
 
 
-export const gettingTranslatedDate = (date: string) => dayjs (date).format ('D MMMM');
+export const getTranslateDate = (date: string) => dayjs (date).format ('D MMMM');
 
 
 export const sortReviews = (reviews: Reviews) => {
@@ -91,7 +91,7 @@ export const sortUp = (products: CamerasList, payload: string) => {
 };
 
 
-export const filteringByCategory = (products: CamerasList, payload: string): CamerasList => {
+export const filterByCategory = (products: CamerasList, payload: string): CamerasList => {
   let camerasList: CamerasList = [];
 
   switch (payload) {
@@ -127,7 +127,7 @@ export const filteringByCategory = (products: CamerasList, payload: string): Cam
   return camerasList;
 };
 
-export const filteringByPrice = (
+export const filterByPrice = (
   products: CamerasList,
   priceFrom: number | null,
   priceTo: number | null
